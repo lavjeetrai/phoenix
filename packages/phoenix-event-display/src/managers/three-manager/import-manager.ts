@@ -59,6 +59,7 @@ export class ImportManager {
 
   /**
    * Lazily instantiates and caches the GLTFLoader and DRACOLoader.
+   * @returns The GLTFLoader instance.
    */
   private getGLTFLoader(): GLTFLoader {
     if (!this.gltfLoader) {
@@ -73,11 +74,19 @@ export class ImportManager {
     return this.gltfLoader;
   }
 
+  /**
+   * Lazily instantiates and caches the OBJLoader.
+   * @returns The OBJLoader instance.
+   */
   private getOBJLoader(): OBJLoader {
     if (!this.objLoader) this.objLoader = new OBJLoader();
     return this.objLoader;
   }
 
+  /**
+   * Lazily instantiates and caches the ObjectLoader.
+   * @returns The ObjectLoader instance.
+   */
   private getObjectLoader(): ObjectLoader {
     if (!this.objectLoader) this.objectLoader = new ObjectLoader();
     return this.objectLoader;
@@ -85,6 +94,7 @@ export class ImportManager {
 
   /**
    * Helper to safely dispose of a material and its associated textures to prevent GPU memory leaks.
+   * @param material The material or array of materials to dispose.
    */
   private disposeMaterial(material: Material | Material[]) {
     const materials = Array.isArray(material) ? material : [material];
@@ -102,6 +112,12 @@ export class ImportManager {
 
   /**
    * Loads an OBJ (.obj) geometry from the given filename.
+   * @param filename Path to the geometry.
+   * @param name Name given to the geometry.
+   * @param color Color to initialize the geometry.
+   * @param doubleSided Renders both sides of the material.
+   * @param setFlat Whether object should be flat-shaded or not.
+   * @returns Promise for loading the geometry.
    */
   public async loadOBJGeometry(
     filename: string,
@@ -134,6 +150,9 @@ export class ImportManager {
 
   /**
    * Parses and loads a geometry in OBJ (.obj) format.
+   * @param geometry Geometry in OBJ (.obj) format.
+   * @param name Name given to the geometry.
+   * @returns The processed object.
    */
   public parseOBJGeometry(geometry: string, name: string): Object3D {
     const loader = this.getOBJLoader();
@@ -141,6 +160,15 @@ export class ImportManager {
     return this.processOBJ(object, name, 0x41a6f4, false, false);
   }
 
+  /**
+   * Process the geometry object being loaded from OBJ (.obj) format.
+   * @param object 3D object.
+   * @param name Name of the object.
+   * @param color Color of the object.
+   * @param doubleSided Renders both sides of the material.
+   * @param setFlat Whether object should be flat-shaded or not.
+   * @returns The processed object.
+   */
   private processOBJ(
     object: Object3D,
     name: string,
@@ -153,6 +181,14 @@ export class ImportManager {
     return this.setObjFlat(object, color, doubleSided, setFlat);
   }
 
+  /**
+   * Process the 3D object and flatten it.
+   * @param object3d Group of geometries that make up the object.
+   * @param color Color of the object.
+   * @param doubleSided Renders both sides of the material.
+   * @param setFlat Whether object should be flat-shaded or not.
+   * @returns The processed object.
+   */
   private setObjFlat(
     object3d: Object3D,
     color: ColorRepresentation,
@@ -195,6 +231,8 @@ export class ImportManager {
   /**
    * Parses and loads a scene in Phoenix (.phnx) format.
    * Resolves to an object containing eventData and geometries.
+   * @param scene Geometry in Phoenix (.phnx) format.
+   * @returns Promise for loading the scene.
    */
   public async parsePhnxScene(
     scene: Record<string, unknown>,
@@ -218,6 +256,11 @@ export class ImportManager {
 
   /**
    * Modernized async/await handler for processing standard files or extracting zips.
+   * @param filename Name of the original file.
+   * @param data Content of the original file.
+   * @param path Path of the original file.
+   * @param processFileCallback The method to be called on each file content.
+   * @returns Promise for loading the geometry.
    */
   private async handleZipOrArrayBuffer(
     filename: string,
@@ -272,6 +315,13 @@ export class ImportManager {
 
   /**
    * Loads a GLTF (.gltf,.glb) scene(s)/geometry from the given URL.
+   * Also supports zipped versions of the files.
+   * @param sceneUrl URL to the GLTF (.gltf/.glb or a zip with such file(s)) file.
+   * @param name Name of the loaded scene/geometry if a single scene is present, ignored if several scenes are present.
+   * @param menuNodeName Path to the node in Phoenix menu to add the geometry to. Use `>` as a separator.
+   * @param scale Scale of the geometry.
+   * @param initiallyVisible Whether the geometry is initially visible or not.
+   * @returns Promise for loading the geometry.
    */
   public async loadGLTFGeometry(
     sceneUrl: string,
@@ -303,7 +353,11 @@ export class ImportManager {
     );
   }
 
-  /** * Parses and loads a geometry in GLTF (.gltf,.glb) format from a File object.
+  /**
+   * Parses and loads a geometry in GLTF (.gltf,.glb) format from a File object.
+   * Also supports zip versions of those.
+   * @param file Geometry file in GLTF (.gltf or .glb) format or zip file containing them.
+   * @returns Promise for loading the geometry.
    */
   public async parseGLTFGeometry(file: File): Promise<GeometryUIParameters[]> {
     const data = await file.arrayBuffer();
@@ -326,6 +380,13 @@ export class ImportManager {
 
   /**
    * Unified parsing logic for GLTF data.
+   * @param sceneData ArrayBuffer containing the geometry file's content (gltf or glb data).
+   * @param path The base path from which to find subsequent glTF resources.
+   * @param name Name given to the geometry.
+   * @param menuNodeName Path to the node in Phoenix menu to add the geometry to.
+   * @param scale Scale of the geometry.
+   * @param initiallyVisible Whether the geometry is initially visible or not.
+   * @returns Promise for loading the geometry.
    */
   private parseGLTFData(
     sceneData: ArrayBuffer,
@@ -433,6 +494,9 @@ export class ImportManager {
 
   /**
    * Get geometry name and menuNodeName from GLTF scene name.
+   * @param sceneName GLTF scene name.
+   * @param menuNodeName Path to the node in Phoenix menu to add the geometry to.
+   * @returns Geometry name and menuNodeName if present in scene name.
    */
   private processGLTFSceneName(sceneName?: string, menuNodeName?: string) {
     if (sceneName) {
@@ -448,6 +512,11 @@ export class ImportManager {
 
   /**
    * Loads geometries from JSON.
+   * @param json JSON or URL to JSON file of the geometry.
+   * @param name Name of the geometry or group of geometries.
+   * @param scale Scale of the geometry.
+   * @param doubleSided Renders both sides of the material.
+   * @returns Promise for loading the geometry.
    */
   public async loadJSONGeometry(
     json: string | Record<string, unknown>,
@@ -478,6 +547,10 @@ export class ImportManager {
 
   /**
    * Process the geometry by setting up material and clipping attributes.
+   * @param geometry Geometry to be processed.
+   * @param name Name of the geometry.
+   * @param scale Scale of the geometry.
+   * @param doubleSided Renders both sides of the material.
    */
   private processGeometry(
     geometry: Object3D,
@@ -535,6 +608,8 @@ export class ImportManager {
 
   /**
    * Get the size of object.
+   * @param object Object to get the size of.
+   * @returns The size (vector) of object as a string.
    */
   private getObjectSize(object: Mesh): string {
     const size = new Vector3();
