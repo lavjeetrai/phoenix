@@ -36,9 +36,11 @@ export class ImportManager {
   /** Object group ID containing detector geometries. */
   private GEOMETRIES_ID: string;
 
-  // Cached loaders to prevent CPU/Memory spikes
+  /** Cached GLTFLoader instance */
   private gltfLoader?: GLTFLoader;
+  /** Cached OBJLoader instance */
   private objLoader?: OBJLoader;
+  /** Cached ObjectLoader instance */
   private objectLoader?: ObjectLoader;
 
   /**
