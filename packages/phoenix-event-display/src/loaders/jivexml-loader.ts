@@ -517,14 +517,9 @@ export class JiveXMLLoader extends PhoenixLoader {
     const id = this.getNumberArrayFromHTML(sctClustersHTML, 'id');
     const phiModule = this.getNumberArrayFromHTML(sctClustersHTML, 'phiModule');
     const side = this.getNumberArrayFromHTML(sctClustersHTML, 'side');
-    // Commenting out some variables we don't yet use.
-    // const width = this.getNumberArrayFromHTML(sctClustersHTML, 'width');
     const x0 = this.getNumberArrayFromHTML(sctClustersHTML, 'x0');
-    // const x1 = this.getNumberArrayFromHTML(sctClustersHTML, 'x1');
     const y0 = this.getNumberArrayFromHTML(sctClustersHTML, 'y0');
-    // const y1 = this.getNumberArrayFromHTML(sctClustersHTML, 'y1');
     const z0 = this.getNumberArrayFromHTML(sctClustersHTML, 'z0');
-    // const z1 = this.getNumberArrayFromHTML(sctClustersHTML, 'z1');
     eventData.Hits.SCT = [];
 
     for (let i = 0; i < numOfSCTClusters; i++) {
