@@ -86,8 +86,12 @@ describe('Invariant Mass Helpers', () => {
       expect(momentum).not.toBeNull();
       if (momentum) {
         expect(momentum.E).toBe(energy);
-        expect(momentum.px).toBeCloseTo(energy * Math.sin(expectedTheta) * Math.cos(phi));
-        expect(momentum.py).toBeCloseTo(energy * Math.sin(expectedTheta) * Math.sin(phi));
+        expect(momentum.px).toBeCloseTo(
+          energy * Math.sin(expectedTheta) * Math.cos(phi),
+        );
+        expect(momentum.py).toBeCloseTo(
+          energy * Math.sin(expectedTheta) * Math.sin(phi),
+        );
         expect(momentum.pz).toBeCloseTo(energy * Math.cos(expectedTheta));
       }
     });
@@ -108,17 +112,18 @@ describe('Invariant Mass Helpers', () => {
       const sumPy = p1.py + p2.py; // 110
       const sumPz = p1.pz + p2.pz; // 10
 
-      const expectedM2 = sumE * sumE - sumPx * sumPx - sumPy * sumPy - sumPz * sumPz; // 62500 - 0 - 12100 - 100 = 50300
+      const expectedM2 =
+        sumE * sumE - sumPx * sumPx - sumPy * sumPy - sumPz * sumPz; // 62500 - 0 - 12100 - 100 = 50300
       const expectedMass = Math.sqrt(expectedM2);
 
       expect(invariantMass([p1, p2])).toBeCloseTo(expectedMass);
     });
 
     it('should return 0 if calculated m2 is less than or equal to 0', () => {
-       const p1 = { E: 10, px: 20, py: 0, pz: 0 };
-       const p2 = { E: 10, px: 20, py: 0, pz: 0 };
-       // sumE = 20, sumPx = 40. m2 = 400 - 1600 < 0
-       expect(invariantMass([p1, p2])).toBe(0);
+      const p1 = { E: 10, px: 20, py: 0, pz: 0 };
+      const p2 = { E: 10, px: 20, py: 0, pz: 0 };
+      // sumE = 20, sumPx = 40. m2 = 400 - 1600 < 0
+      expect(invariantMass([p1, p2])).toBe(0);
     });
   });
 
@@ -127,17 +132,33 @@ describe('Invariant Mass Helpers', () => {
       expect(atlasClassifyEvent({ electron: 2, muon: 0, photon: 0 })).toBe('e');
       expect(atlasClassifyEvent({ electron: 0, muon: 2, photon: 0 })).toBe('m');
       expect(atlasClassifyEvent({ electron: 0, muon: 0, photon: 2 })).toBe('g');
-      expect(atlasClassifyEvent({ electron: 4, muon: 0, photon: 0 })).toBe('4e');
-      expect(atlasClassifyEvent({ electron: 2, muon: 2, photon: 0 })).toBe('2e2m');
-      expect(atlasClassifyEvent({ electron: 0, muon: 4, photon: 0 })).toBe('4m');
+      expect(atlasClassifyEvent({ electron: 4, muon: 0, photon: 0 })).toBe(
+        '4e',
+      );
+      expect(atlasClassifyEvent({ electron: 2, muon: 2, photon: 0 })).toBe(
+        '2e2m',
+      );
+      expect(atlasClassifyEvent({ electron: 0, muon: 4, photon: 0 })).toBe(
+        '4m',
+      );
     });
 
     it('should format fallback string correctly', () => {
-      expect(atlasClassifyEvent({ electron: 1, muon: 0, photon: 0 })).toBe('1e');
-      expect(atlasClassifyEvent({ electron: 0, muon: 1, photon: 0 })).toBe('1m');
-      expect(atlasClassifyEvent({ electron: 0, muon: 0, photon: 1 })).toBe('1g');
-      expect(atlasClassifyEvent({ electron: 1, muon: 1, photon: 1 })).toBe('1e1m1g');
-      expect(atlasClassifyEvent({ electron: 3, muon: 1, photon: 0 })).toBe('3e1m');
+      expect(atlasClassifyEvent({ electron: 1, muon: 0, photon: 0 })).toBe(
+        '1e',
+      );
+      expect(atlasClassifyEvent({ electron: 0, muon: 1, photon: 0 })).toBe(
+        '1m',
+      );
+      expect(atlasClassifyEvent({ electron: 0, muon: 0, photon: 1 })).toBe(
+        '1g',
+      );
+      expect(atlasClassifyEvent({ electron: 1, muon: 1, photon: 1 })).toBe(
+        '1e1m1g',
+      );
+      expect(atlasClassifyEvent({ electron: 3, muon: 1, photon: 0 })).toBe(
+        '3e1m',
+      );
     });
 
     it('should return ? if no identifiable tags', () => {
