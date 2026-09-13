@@ -248,13 +248,6 @@ export class CMSLoader extends PhoenixLoader {
       },
     );
 
-    //! TO BE REVIEWED - Not using extras and assocs - output might be different
-    // let ri = 0;
-    // for (let i = 0; i < assocs.length; i++) {
-    //     ri = assocs[ri][1][1];
-    //     CaloClusters[caloClusterCollection].push(extras[ri]);
-    // }
-
     return CaloClusters;
   }
 
