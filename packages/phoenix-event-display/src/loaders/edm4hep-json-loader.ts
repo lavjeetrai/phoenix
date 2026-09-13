@@ -227,7 +227,11 @@ export class Edm4hepJsonLoader extends PhoenixLoader {
         });
       }
 
-      if (pos.length === 0 && 'trackStates' in rawTrack && rawTrack.trackStates.length > 0) {
+      if (
+        pos.length === 0 &&
+        'trackStates' in rawTrack &&
+        rawTrack.trackStates.length > 0
+      ) {
         rawTrack.trackStates.forEach((trackState: edm4hep.TrackState) => {
           pos.push([
             trackState.referencePoint.x * 0.1,
