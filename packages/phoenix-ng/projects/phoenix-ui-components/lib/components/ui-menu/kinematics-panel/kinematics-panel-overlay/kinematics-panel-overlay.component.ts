@@ -238,7 +238,7 @@ export class KinematicsPanelOverlayComponent implements OnInit, OnDestroy {
     this.activeObject.update(row.uuid);
     this.eventDisplay.highlightObject(row.uuid);
 
-    // TODO: Emit 'track:inspected' via event bus when #826 event bus lands on main.
+    this.eventDisplay.emit('track:inspected', row);
   }
 
   /** Pan camera to a track and highlight it. */
