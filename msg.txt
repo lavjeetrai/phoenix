@@ -1,7 +1,4 @@
-chore: remove commented out if statement in JiveXMLLoader
+chore: remove commented code in JiveXMLLoader
 
-Removed a commented-out line of code from JiveXMLLoader
-(`// if (!trackCollectionName.includes('MuonSpectrometer')) continue;`)
-in `packages/phoenix-event-display/src/loaders/jivexml-loader.ts`
-to improve code health and remove dead code.
-This has no effect on runtime behavior.
+Removed a commented-out line of code from JiveXMLLoader.
+This improves code health by removing dead code, without altering runtime behavior.
