@@ -198,7 +198,6 @@ export class JiveXMLLoader extends PhoenixLoader {
         thickTracks = true;
       }
 
-      // if (!trackCollectionName.includes('MuonSpectrometer')) continue;
       const numOfTracks = Number(collection.getAttribute('count'));
       const jsontracks = [];
 
