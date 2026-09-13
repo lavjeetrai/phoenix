@@ -136,7 +136,6 @@ export class TrackmlLoader extends PhoenixLoader {
             pos: [this.particleData[i].vertex_pos],
             mom: this.particleData[i].mom,
           };
-          // console.log('Just added: ', event_data.Tracks.Particles[i-1]);
         }
       }
       let hitId;
@@ -147,7 +146,6 @@ export class TrackmlLoader extends PhoenixLoader {
         hitId = i;
         particleId = parseInt(this.truthData[i][0]);
         for (let j = 0; j < eventData.Tracks.Particles.length; j++) {
-          // console.log(event_data.Tracks.Particles[j]);
           if (eventData.Tracks.Particles[j].particle_id === particleId) {
             // Found matching particle - add the truth hit position to the particles positions
             eventData.Tracks.Particles[j].pos.push([
@@ -169,8 +167,6 @@ export class TrackmlLoader extends PhoenixLoader {
     let numParticleStubs = 0;
     for (let j = 0; j < eventData.Tracks.Particles.length; j++) {
       if (eventData.Tracks.Particles[j].pos.length < 3) {
-        // console.log ('Track has less than 3 positions');
-        // console.log(event_data.Tracks.Particles[j]);
         numParticleStubs++;
       }
     }
