@@ -27,7 +27,6 @@ export class TrackmlLoader extends PhoenixLoader {
    */
   public processHits(hits: any) {
     const data = hits.split('\n');
-    console.log('Event has this many hits:', data.length);
 
     let values;
     // format is: hit_id,x,y,z,volume_id,layer_id,module_id
@@ -47,7 +46,6 @@ export class TrackmlLoader extends PhoenixLoader {
    */
   public processParticles(particles: any) {
     const data = particles.split('\n');
-    console.log('Event has this many particles:', data.length);
 
     let values;
     // format is: particle_id,vx,vy,vz,px,py,pz,q,nhits
@@ -75,7 +73,6 @@ export class TrackmlLoader extends PhoenixLoader {
    */
   public processTruth(truth: any) {
     const data = truth.split('\n');
-    console.log('Event has this many truth: ', data.length);
 
     let values;
     // format is: hit_id,particle_id,tx,ty,tz,tpx,tpy,tpz,weight
@@ -122,10 +119,6 @@ export class TrackmlLoader extends PhoenixLoader {
         ];
       }
     }
-    console.log(
-      'Will show this many hits',
-      eventData.Hits.Reconstructed.length,
-    );
 
     if (this.truthData) {
       if (this.particleData) {
@@ -136,7 +129,6 @@ export class TrackmlLoader extends PhoenixLoader {
             pos: [this.particleData[i].vertex_pos],
             mom: this.particleData[i].mom,
           };
-          // console.log('Just added: ', event_data.Tracks.Particles[i-1]);
         }
       }
       let hitId;
@@ -147,7 +139,6 @@ export class TrackmlLoader extends PhoenixLoader {
         hitId = i;
         particleId = parseInt(this.truthData[i][0]);
         for (let j = 0; j < eventData.Tracks.Particles.length; j++) {
-          // console.log(event_data.Tracks.Particles[j]);
           if (eventData.Tracks.Particles[j].particle_id === particleId) {
             // Found matching particle - add the truth hit position to the particles positions
             eventData.Tracks.Particles[j].pos.push([
@@ -169,8 +160,6 @@ export class TrackmlLoader extends PhoenixLoader {
     let numParticleStubs = 0;
     for (let j = 0; j < eventData.Tracks.Particles.length; j++) {
       if (eventData.Tracks.Particles[j].pos.length < 3) {
-        // console.log ('Track has less than 3 positions');
-        // console.log(event_data.Tracks.Particles[j]);
         numParticleStubs++;
       }
     }
