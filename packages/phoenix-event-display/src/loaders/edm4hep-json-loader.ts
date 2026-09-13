@@ -122,8 +122,6 @@ export class Edm4hepJsonLoader extends PhoenixLoader {
         );
 
         this.eventData[eventName] = newEvent;
-
-        console.log(eventName, newEvent);
       },
     );
     return true;
