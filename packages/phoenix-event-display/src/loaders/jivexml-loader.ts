@@ -316,7 +316,7 @@ export class JiveXMLLoader extends PhoenixLoader {
           theta += Math.PI;
           // TODO - check if we need to flip phi here?
         }
-        // FIXME - should probably handle this better ... what if phi = 4PI for example?
+        track.phi = track.phi % (2.0 * Math.PI);
         if (track.phi > Math.PI) {
           track.phi -= 2.0 * Math.PI;
         } else if (track.phi < -Math.PI) {
