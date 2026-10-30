@@ -76,7 +76,7 @@ export class ColorManager {
     const collection = eventData?.getObjectByName(collectionName);
 
     if (collection) {
-      for (const child of Object.values(collection.children)) {
+      for (const child of collection.children) {
         child.traverse((object) => {
           setColorForObject(object, color);
         });
@@ -98,7 +98,7 @@ export class ColorManager {
       const collection = eventData?.getObjectByName(collectionName);
 
       if (collection) {
-        for (const child of Object.values(collection.children)) {
+        for (const child of collection.children) {
           child.traverse((object) => {
             const randomColor = Math.floor(Math.random() * 0xffffff);
             setColorForObject(object, randomColor);
