@@ -303,6 +303,7 @@ export class ATLASESDLoader extends PhoenixLoader {
    * @returns Promise resolving to the events data.
    */
   async getEventData(fileSource: File | string): Promise<PhoenixEventsData> {
+    // Disable URL stamp query parameter in JSROOT settings when opening ROOT files.
     jsrootSettings.UseStamp = false;
     this.skips.clear();
     this.available.clear();
