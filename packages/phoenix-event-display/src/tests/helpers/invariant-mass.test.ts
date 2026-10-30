@@ -152,7 +152,9 @@ describe('invariant-mass helper', () => {
 
   describe('ATLAS_MASTERCLASS_CONFIG', () => {
     it('should have valid properties and classification callback', () => {
-      expect(ATLAS_MASTERCLASS_CONFIG.title).toBe('Masterclass: Invariant Mass');
+      expect(ATLAS_MASTERCLASS_CONFIG.title).toBe(
+        'Masterclass: Invariant Mass',
+      );
       expect(ATLAS_MASTERCLASS_CONFIG.particleTags.length).toBeGreaterThan(0);
       expect(ATLAS_MASTERCLASS_CONFIG.hints.length).toBeGreaterThan(0);
       expect(ATLAS_MASTERCLASS_CONFIG.classifyEvent({ electron: 2 })).toBe('e');
