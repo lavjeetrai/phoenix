@@ -45,4 +45,43 @@ describe('EventDisplay', () => {
       expect(eventDisplay.onStateChange).toEqual([]);
     });
   });
+
+  describe('buildSessionHost', () => {
+    let eventDisplay: any;
+    let sessionHost: any;
+
+    beforeEach(() => {
+      eventDisplay = Object.create(EventDisplay.prototype);
+      sessionHost = eventDisplay['buildSessionHost']();
+    });
+
+    describe('getStateSnapshot', () => {
+      it('should return state JSON when getStateManager succeeds', () => {
+        const mockState = { eventDisplay: { phoenixMenu: {} } };
+        eventDisplay.getStateManager = jest.fn().mockReturnValue({
+          getStateAsJSON: jest.fn().mockReturnValue(mockState),
+        });
+
+        expect(sessionHost.getStateSnapshot()).toEqual(mockState);
+      });
+
+      it('should return empty object when getStateManager throws an error', () => {
+        eventDisplay.getStateManager = jest.fn().mockImplementation(() => {
+          throw new Error('StateManager failed');
+        });
+
+        expect(sessionHost.getStateSnapshot()).toEqual({});
+      });
+
+      it('should return empty object when getStateAsJSON throws an error', () => {
+        eventDisplay.getStateManager = jest.fn().mockReturnValue({
+          getStateAsJSON: jest.fn().mockImplementation(() => {
+            throw new Error('getStateAsJSON failed');
+          }),
+        });
+
+        expect(sessionHost.getStateSnapshot()).toEqual({});
+      });
+    });
+  });
 });
