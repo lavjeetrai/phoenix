@@ -54,4 +54,22 @@ describe('TrackmlLoader', () => {
       Tracks: { Particles: [] },
     });
   });
+
+  it('should update progress info textContent when DOM element info exists', () => {
+    const infoElement = document.createElement('div');
+    infoElement.id = 'info';
+    document.body.appendChild(infoElement);
+
+    let truth = 'hit_id,particle_id,tx,ty,tz,tpx,tpy,tpz,weight\n';
+    for (let i = 1; i <= 10; i++) {
+      truth += `${i},1,0,0,0,0,0,0,0\n`;
+    }
+    trackmlLoader.processTruth(truth);
+    trackmlLoader.getEventData('eventNum');
+
+    expect(infoElement.textContent).toContain('Processed');
+    expect(infoElement.textContent).toContain('% of event data.');
+
+    document.body.removeChild(infoElement);
+  });
 });

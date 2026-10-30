@@ -18,7 +18,7 @@ export class TrackmlLoader extends PhoenixLoader {
     super();
     this.hitData = [];
     this.particleData = [];
-    this.truthData = {};
+    this.truthData = [];
   }
 
   /**
@@ -158,10 +158,13 @@ export class TrackmlLoader extends PhoenixLoader {
           }
         }
         if (i % stepSize === 0) {
-          document.getElementById('info')!.innerHTML =
-            'Processed ' +
-            (100 * i) / this.truthData.length +
-            '% of event data.';
+          const infoElement = document.getElementById('info');
+          if (infoElement) {
+            infoElement.textContent =
+              'Processed ' +
+              (100 * i) / this.truthData.length +
+              '% of event data.';
+          }
         }
       }
     }
