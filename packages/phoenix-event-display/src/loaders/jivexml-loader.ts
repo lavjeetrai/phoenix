@@ -302,13 +302,6 @@ export class JiveXMLLoader extends PhoenixLoader {
 
         track.pT = Math.abs(pT[i]) * 1000; // JiveXML uses GeV
         const momentum = track.pT / Math.sin(theta);
-        track.dparams = [
-          d0[i],
-          z0[i],
-          phi0[i],
-          theta,
-          Math.sign(pT[i]) / momentum,
-        ];
         track.phi = phi0[i];
 
         // if (track.phi == 1.37786) {
@@ -322,12 +315,21 @@ export class JiveXMLLoader extends PhoenixLoader {
           theta += Math.PI;
           // TODO - check if we need to flip phi here?
         }
-        // FIXME - should probably handle this better ... what if phi = 4PI for example?
-        if (track.phi > Math.PI) {
+
+        while (track.phi > Math.PI) {
           track.phi -= 2.0 * Math.PI;
-        } else if (track.phi < -Math.PI) {
+        }
+        while (track.phi < -Math.PI) {
           track.phi += 2.0 * Math.PI;
         }
+
+        track.dparams = [
+          d0[i],
+          z0[i],
+          track.phi,
+          theta,
+          Math.sign(pT[i]) / momentum,
+        ];
 
         if (!CoordinateHelper.anglesAreSane(theta, track.phi)) {
           badTracks['Improper angles']++;
