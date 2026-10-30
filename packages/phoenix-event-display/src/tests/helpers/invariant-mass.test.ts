@@ -16,14 +16,20 @@ describe('invariant-mass helper', () => {
     it('should return null if phi and dparams[2] are missing', () => {
       expect(fourMomentumFromTrack({ pT: 1000, eta: 0 }, 0.511)).toBeNull();
       expect(
-        fourMomentumFromTrack({ pT: 1000, dparams: [0, 0, undefined, 1.0] }, 0.511),
+        fourMomentumFromTrack(
+          { pT: 1000, dparams: [0, 0, undefined, 1.0] },
+          0.511,
+        ),
       ).toBeNull();
     });
 
     it('should return null if theta and eta are missing', () => {
       expect(fourMomentumFromTrack({ pT: 1000, phi: 0 }, 0.511)).toBeNull();
       expect(
-        fourMomentumFromTrack({ pT: 1000, dparams: [0, 0, 0, undefined] }, 0.511),
+        fourMomentumFromTrack(
+          { pT: 1000, dparams: [0, 0, 0, undefined] },
+          0.511,
+        ),
       ).toBeNull();
     });
 
@@ -42,7 +48,9 @@ describe('invariant-mass helper', () => {
         const theta = 2 * Math.atan(Math.exp(-eta));
         const expectedPz = pT / Math.tan(theta);
         const expectedP2 =
-          expectedPx * expectedPx + expectedPy * expectedPy + expectedPz * expectedPz;
+          expectedPx * expectedPx +
+          expectedPy * expectedPy +
+          expectedPz * expectedPz;
         const expectedE = Math.sqrt(expectedP2 + mass * mass);
 
         expect(res.px).toBeCloseTo(expectedPx);
@@ -69,7 +77,9 @@ describe('invariant-mass helper', () => {
         const expectedPy = pT * Math.sin(phi);
         const expectedPz = pT / Math.tan(theta);
         const expectedP2 =
-          expectedPx * expectedPx + expectedPy * expectedPy + expectedPz * expectedPz;
+          expectedPx * expectedPx +
+          expectedPy * expectedPy +
+          expectedPz * expectedPz;
         const expectedE = Math.sqrt(expectedP2 + mass * mass);
 
         expect(res.px).toBeCloseTo(expectedPx);
@@ -173,14 +183,24 @@ describe('invariant-mass helper', () => {
       expect(atlasClassifyEvent({ electron: 2, muon: 0, photon: 0 })).toBe('e');
       expect(atlasClassifyEvent({ electron: 0, muon: 2, photon: 0 })).toBe('m');
       expect(atlasClassifyEvent({ electron: 0, muon: 0, photon: 2 })).toBe('g');
-      expect(atlasClassifyEvent({ electron: 4, muon: 0, photon: 0 })).toBe('4e');
-      expect(atlasClassifyEvent({ electron: 2, muon: 2, photon: 0 })).toBe('2e2m');
-      expect(atlasClassifyEvent({ electron: 0, muon: 4, photon: 0 })).toBe('4m');
+      expect(atlasClassifyEvent({ electron: 4, muon: 0, photon: 0 })).toBe(
+        '4e',
+      );
+      expect(atlasClassifyEvent({ electron: 2, muon: 2, photon: 0 })).toBe(
+        '2e2m',
+      );
+      expect(atlasClassifyEvent({ electron: 0, muon: 4, photon: 0 })).toBe(
+        '4m',
+      );
     });
 
     it('should format non-standard particle combinations', () => {
-      expect(atlasClassifyEvent({ electron: 1, muon: 1, photon: 0 })).toBe('1e1m');
-      expect(atlasClassifyEvent({ electron: 0, muon: 0, photon: 3 })).toBe('3g');
+      expect(atlasClassifyEvent({ electron: 1, muon: 1, photon: 0 })).toBe(
+        '1e1m',
+      );
+      expect(atlasClassifyEvent({ electron: 0, muon: 0, photon: 3 })).toBe(
+        '3g',
+      );
     });
 
     it('should return ? when no particles are tagged', () => {
