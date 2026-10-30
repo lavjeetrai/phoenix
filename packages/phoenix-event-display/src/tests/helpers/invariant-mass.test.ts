@@ -79,7 +79,11 @@ describe('invariant-mass helper functions', () => {
     });
 
     it('should handle zero energy cluster', () => {
-      const momentum = fourMomentumFromCluster({ energy: 0, eta: 0.5, phi: 1.0 });
+      const momentum = fourMomentumFromCluster({
+        energy: 0,
+        eta: 0.5,
+        phi: 1.0,
+      });
 
       expect(momentum).not.toBeNull();
       expect(momentum?.E).toBe(0);
@@ -93,9 +97,7 @@ describe('invariant-mass helper functions', () => {
     it('should return null if pT or orientation (phi/theta) is missing', () => {
       expect(fourMomentumFromTrack({}, 0.511)).toBeNull();
       expect(fourMomentumFromTrack({ pT: 1000 }, 0.511)).toBeNull();
-      expect(
-        fourMomentumFromTrack({ pT: 1000, eta: 0 }, 0.511),
-      ).toBeNull();
+      expect(fourMomentumFromTrack({ pT: 1000, eta: 0 }, 0.511)).toBeNull();
     });
 
     it('should calculate 4-momentum using eta when theta is not provided', () => {
@@ -134,9 +136,7 @@ describe('invariant-mass helper functions', () => {
   describe('invariantMass', () => {
     it('should return 0 for fewer than 2 4-momenta', () => {
       expect(invariantMass([])).toBe(0);
-      expect(
-        invariantMass([{ E: 1000, px: 500, py: 500, pz: 707 }]),
-      ).toBe(0);
+      expect(invariantMass([{ E: 1000, px: 500, py: 500, pz: 707 }])).toBe(0);
     });
 
     it('should correctly compute invariant mass for two back-to-back massless particles', () => {
