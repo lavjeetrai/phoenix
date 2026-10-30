@@ -45,6 +45,17 @@ describe('SessionRecorder', () => {
     expect(session.initialState).toEqual({ snapshot: true });
   });
 
+  it('handles error when getStateSnapshot throws and sets initialState to empty object', () => {
+    const { host } = makeHost();
+    host.getStateSnapshot = () => {
+      throw new Error('getStateSnapshot failed');
+    };
+    const rec = new SessionRecorder(host);
+    rec.start();
+    const session = rec.stop();
+    expect(session.initialState).toEqual({});
+  });
+
   it('throws when start is called while already recording', () => {
     const { host } = makeHost();
     const rec = new SessionRecorder(host);
