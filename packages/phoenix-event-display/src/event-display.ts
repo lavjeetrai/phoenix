@@ -177,6 +177,7 @@ export class EventDisplay {
    * - `'particle-tagged'`: Fired when a particle is tagged in the masterclass panel.
    * - `'particle-untagged'`: Fired when a tagged particle is removed.
    * - `'result-recorded'`: Fired when an invariant mass result is recorded.
+   * - `'track:inspected'`: Fired when a track is selected in the kinematics panel.
    *
    * @param eventName The event name to listen for.
    * @param callback Callback invoked with event-specific data.
