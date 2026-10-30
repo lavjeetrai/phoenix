@@ -311,13 +311,6 @@ export class JiveXMLLoader extends PhoenixLoader {
         ];
         track.phi = phi0[i];
 
-        // if (track.phi == 1.37786) {
-        // if (i === 0) {
-        //   console.log('Cuplrit found! Index = ', i);
-        //   debugTrack = true;
-        //   storeTrack = true;
-        // }
-
         if (theta < 0) {
           theta += Math.PI;
           // TODO - check if we need to flip phi here?
