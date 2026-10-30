@@ -472,7 +472,7 @@ export class ThreeManager {
 
           const p = document.createElement('p');
           p.id = '3dcoordinates';
-          p.innerHTML = `${
+          p.textContent = `${
             mainIntersect.object.name
           }:\r\n\tOriginal (cm): (${Math.round(
             initialCoord.x / 10,
@@ -481,7 +481,7 @@ export class ThreeManager {
           )})`;
 
           if (this.origin.x != 0 || this.origin.y != 0 || this.origin.z != 0) {
-            p.innerHTML += `\r\n\tCompared to grid (cm): (${Math.round(
+            p.textContent += `\r\n\tCompared to grid (cm): (${Math.round(
               finalCoord.x / 10,
             )}, ${Math.round(finalCoord.y / 10)}, ${Math.round(
               finalCoord.z / 10,
@@ -503,17 +503,15 @@ export class ThreeManager {
           div.style.left = `calc(${event.clientX}px - 0.5rem)`;
           div.style.border = `2px solid ${this.displayColor}`;
           div.style.borderRadius = '0.5rem';
-          div.innerHTML = `
-            <div 
-              style = "
-                background-color: ${this.displayColor}; 
-                margin-top: calc(0.3rem - 1.5px);
-                margin-left: calc(0.3rem - 1.5px); 
-                width: 0.4rem; 
-                height: 0.4rem; 
-                border-radius: 0.5rem;
-              "
-            ></div>`;
+
+          const innerDot = document.createElement('div');
+          innerDot.style.backgroundColor = this.displayColor;
+          innerDot.style.marginTop = 'calc(0.3rem - 1.5px)';
+          innerDot.style.marginLeft = 'calc(0.3rem - 1.5px)';
+          innerDot.style.width = '0.4rem';
+          innerDot.style.height = '0.4rem';
+          innerDot.style.borderRadius = '0.5rem';
+          div.appendChild(innerDot);
 
           app?.appendChild(p);
           app?.appendChild(div);
