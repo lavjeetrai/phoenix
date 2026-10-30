@@ -4,7 +4,10 @@ import {
   getAvailableColumns,
   EventSummary,
 } from '../../helpers/event-summary';
-import type { PhoenixEventData, PhoenixEventsData } from '../../lib/types/event-data';
+import type {
+  PhoenixEventData,
+  PhoenixEventsData,
+} from '../../lib/types/event-data';
 
 describe('EventSummary Helper', () => {
   describe('summarizeEvent', () => {
@@ -134,14 +137,18 @@ describe('EventSummary Helper', () => {
           MET_Coll: [],
         },
       } as unknown as PhoenixEventData;
-      expect(Number.isNaN(summarizeEvent('e2', eventDataEmptyMET).met)).toBe(true);
+      expect(Number.isNaN(summarizeEvent('e2', eventDataEmptyMET).met)).toBe(
+        true,
+      );
 
       const eventDataMissingParams = {
         MissingEnergy: {
           MET_Coll: [{}],
         },
       } as unknown as PhoenixEventData;
-      expect(Number.isNaN(summarizeEvent('e3', eventDataMissingParams).met)).toBe(true);
+      expect(
+        Number.isNaN(summarizeEvent('e3', eventDataMissingParams).met),
+      ).toBe(true);
     });
   });
 
