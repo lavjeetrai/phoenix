@@ -111,7 +111,7 @@ export class JiveXMLLoader extends PhoenixLoader {
     let array = [];
     const elements = collection.getElementsByTagName(key);
     if (elements.length) {
-      array = elements[0].innerHTML
+      array = (elements[0].textContent || '')
         .replace(/\r\n|\n|\r/gm, ' ')
         .trim()
         .split(' ')
@@ -129,7 +129,7 @@ export class JiveXMLLoader extends PhoenixLoader {
   private getStringArrayFromHTML(collection: Element, key: any): string[] {
     const elements = collection.getElementsByTagName(key);
     if (elements.length) {
-      return elements[0].innerHTML
+      return (elements[0].textContent || '')
         .replace(/\r\n|\n|\r/gm, ' ')
         .trim()
         .split(' ')
@@ -222,7 +222,7 @@ export class JiveXMLLoader extends PhoenixLoader {
         const polyLineXHTML = collection.getElementsByTagName('polylineX');
 
         if (polyLineXHTML.length > 0) {
-          polylineX = polyLineXHTML[0].innerHTML
+          polylineX = (polyLineXHTML[0].textContent || '')
             .replace(/\r\n|\n|\r/gm, ' ')
             .trim()
             .split(' ')
