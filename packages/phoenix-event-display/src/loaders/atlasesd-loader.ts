@@ -1,5 +1,5 @@
 import { PhoenixLoader } from './phoenix-loader';
-import { openFile } from 'jsroot';
+import { openFile, settings as jsrootSettings } from 'jsroot';
 import { TSelector, treeProcess } from 'jsroot/tree';
 import { CoordinateHelper } from '../helpers/coordinate-helper';
 import { PhoenixEventData, PhoenixEventsData } from '../lib/types/event-data';
@@ -303,6 +303,7 @@ export class ATLASESDLoader extends PhoenixLoader {
    * @returns Promise resolving to the events data.
    */
   async getEventData(fileSource: File | string): Promise<PhoenixEventsData> {
+    jsrootSettings.UseStamp = false;
     this.skips.clear();
     this.available.clear();
 
