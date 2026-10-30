@@ -308,7 +308,7 @@ export class SceneManager {
 
     const collection = eventData.getObjectByName(collectionName);
     if (collection) {
-      for (const child of Object.values(collection.children)) {
+      for (const child of collection.children) {
         // InstancedMesh: filter by scaling hidden instances to zero
         if (
           child.userData?._isInstancedCaloCells &&
@@ -352,7 +352,7 @@ export class SceneManager {
     }
     const collection = parent.getObjectByName(name);
     if (collection) {
-      for (const child of Object.values(collection.children)) {
+      for (const child of collection.children) {
         child.visible = visible;
       }
     }
@@ -399,7 +399,7 @@ export class SceneManager {
     const collection = eventData.getObjectByName(collectionName) as Group;
     if (!collection) return;
 
-    for (const child of Object.values(collection.children)) {
+    for (const child of collection.children) {
       const trackGroup = child as Group;
       const trackParams = (trackGroup as any).userData;
       if (!trackParams) continue;
